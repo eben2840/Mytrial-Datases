@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    </head>
+    <body>
+
+        {% with messages = get_flashed_messages()%}
+        {%if messages%} 
+        {%for message in messages%}
+        <div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">Well done!</h4>
+            <p>Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.</p>
+            <hr>
+            <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
+          </div>
+        <div class="alert alert-primary" role="alert">
+            {{message}}
+        </div>
+        {%endfor%}
+        {%endif%}
+        {% endwith %}
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <form method='POST' action=''>
+        <div class="form-group">
+          <label for=""></label>
+          <input type="text"
+              class="form-control form-control-sm" name="name" id="" aria-describedby="helpId" placeholder="name">
+          
+              <input type="number"
+              class="form-control form-control-sm" name="age" id="" aria-describedby="helpId" placeholder="age">
+             
+
+              <input type="text"
+              class="form-control form-control-sm" name="gender" id="" aria-describedby="helpId" placeholder="gender">
+          
+              <input type="text"
+              class="form-control form-control-sm" name="primary_phone_number" id="" aria-describedby="helpId" placeholder="primary_phone_number">
+          
+              <input type="number"
+              class="form-control form-control-sm" name="age" id="" aria-describedby="helpId" placeholder="age">
+             
+
+              <input type="text"
+              class="form-control form-control-sm" name="gender" id="" aria-describedby="helpId" placeholder="gender">
+          
+              <input type="text"
+              class="form-control form-control-sm" name="name" id="" aria-describedby="helpId" placeholder="name">
+          
+              <input type="number"
+              class="form-control form-control-sm" name="age" id="" aria-describedby="helpId" placeholder="age">
+             
+
+              <input type="text"
+              class="form-control form-control-sm" name="gender" id="" aria-describedby="helpId" placeholder="gender">
+          
+              <input type="text"
+              class="form-control form-control-sm" name="name" id="" aria-describedby="helpId" placeholder="name">
+          
+              <input type="number"
+              class="form-control form-control-sm" name="age" id="" aria-describedby="helpId" placeholder="age">
+             
+
+              <input type="text"
+              class="form-control form-control-sm" name="gender" id="" aria-describedby="helpId" placeholder="gender">
+          
+              <input type="text"
+              class="form-control form-control-sm" name="name" id="" aria-describedby="helpId" placeholder="name">
+          
+              <input type="number"
+              class="form-control form-control-sm" name="age" id="" aria-describedby="helpId" placeholder="age">
+             
+
+              <input type="text"
+              class="form-control form-control-sm" name="gender" id="" aria-describedby="helpId" placeholder="gender">
+          
+              <input type="text"
+              class="form-control form-control-sm" name="name" id="" aria-describedby="helpId" placeholder="name">
+          
+              <input type="number"
+              class="form-control form-control-sm" name="age" id="" aria-describedby="helpId" placeholder="age">
+             
+
+              <input type="text"
+              class="form-control form-control-sm" name="gender" id="" aria-describedby="helpId" placeholder="gender">
+          
+              <input type="text"
+              class="form-control form-control-sm" name="name" id="" aria-describedby="helpId" placeholder="name">
+          
+              <input type="number"
+              class="form-control form-control-sm" name="age" id="" aria-describedby="helpId" placeholder="age">
+             
+
+              <input type="text"
+              class="form-control form-control-sm" name="gender" id="" aria-describedby="helpId" placeholder="gender">
+          
+        <button type="submit" class="btn btn-primary">Submit</button>
+      
+
+        
+    {%for newentry in persons%}
+    <h4>{{newentry.name}} {{newentry.age}} {{newentry.gender}}<a href="/update/{{newentry.id}}" class="btn btn-outline-secondary btn-sm">update</a>
+       <a href="/delete/{{newentry.id}}" class="btn btn-outline-danger btn-sm">delete</a></h4>
+    {%endfor%}
+   
+    
+
+        <script src="" async defer></script>
+    </body>
+</html>
