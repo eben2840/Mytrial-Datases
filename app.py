@@ -154,6 +154,23 @@ def index():
     products_schema = ProductSchema(many =True)
     return products_schema.jsonify(persons)
 
+#post method in API
+@app.route('/product',methods=['POST'])
+def products():
+    name=request.get_json(['name'])
+    age=request.get_json(['age'])
+    gender=request.get_json(['gender'])
+    
+    newentry = Person(name,age,gender)
+    db.session_add(newentry)
+    db.session_commit()
+    
+    class ProductSchema(ma.Schema):
+        class Meta:
+            
+            fields = ("name", "age", "gender")
+    product_schema = ProductSchema()
+    return product_schema.jsonify(newentry)
 
 
 
