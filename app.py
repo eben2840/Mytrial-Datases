@@ -2,6 +2,7 @@ from csv import field_size_limit
 from curses import flash
 from email.policy import strict
 from enum import unique
+from unittest import result
 from wsgiref.validate import validator
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, redirect, render_template, url_for,request, jsonify
@@ -24,6 +25,7 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 ma = Marshmallow(app)
 
+''''''
 #login for admin
 class User:
     def __init__(self, id, username, password):
@@ -49,8 +51,6 @@ def before_request():
         user = [x for x in users if x.id == session['user_id']][0]
         g.user = user
 
-
-
 #DATABASE MODEL
 #person table
 class Person(db.Model):
@@ -75,7 +75,7 @@ class Person(db.Model):
     
     def __repr__(self):
         return f"Course('{self.id}', {self.name}', {self.age})"
-    
+
     
 
 
@@ -125,10 +125,11 @@ class Program(db.Model):
     
     
     
-    
+#postman  
     class ProductSchema(ma.Schema):
         class Meta:
-            fields = ("name", "age", "gender")
+            fields = ("name", "age", "gender", "id")
+    product_schema = ProductSchema()
     products_schema = ProductSchema(many =True)
 
 #routes 
@@ -145,28 +146,13 @@ def index():
         db.session.commit()
         print(persons)
     flash('welcome jon!' "success")
-    
+   
     class ProductSchema(ma.Schema):
         class Meta:
+            
             fields = ("name", "age", "gender")
     products_schema = ProductSchema(many =True)
-    
-    
-    all_products = Person.query.all()
-    result = products_schema.dump(all_products)
-    return jsonify(result.data)
- 
-    
-    
-    
-    # persons =f'{{"name", "age", "gender"}})'
     return products_schema.jsonify(persons)
-    
-    
-    
-   
-    
-   
 
 
 
@@ -189,8 +175,7 @@ def update(id):
 @app.route("/delete/<int:id>")
 def delete(id):
     delete=Person.query.get_or_404(id)
-  
-       
+
     try:
             db.session.delete(delete)
             db.session.commit()
@@ -235,9 +220,8 @@ def profile():
     return render_template('profile.html' )
 
 
-
 if __name__ == '__main__':
     #DEBUG is SET to TRUE. CHANGE FOR PROD
-    app.run(host='0.0.0.0', port=5000,debug=True)
+    app.run(host='0.0.0.0', port=8000,debug=True)
     
     
