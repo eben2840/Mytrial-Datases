@@ -1,16 +1,11 @@
-from csv import field_size_limit
-from curses import flash
-from email.policy import strict
-from enum import unique
-from unittest import result
-from wsgiref.validate import validator
 from flask_sqlalchemy import SQLAlchemy
-from flask import Flask, redirect, render_template, url_for,request, jsonify
+from flask import Flask, redirect, render_template, url_for,request,jsonify
 import os
 from flask_migrate import Migrate
+import json
 from flask_marshmallow import Marshmallow
 from flask import(
-Flask,g,redirect,render_template,request,session,url_for,flash
+Flask,g,redirect,render_template,request,session,url_for,flash,jsonify
 )
 
 
@@ -73,7 +68,10 @@ class Person(db.Model):
     status_doa= db.Column(db.String(),nullable = True)
     extra_curriculum_activities= db.Column(db.String(),nullable = True)
     
-    def __repr__(self):
+    def __repr__(self, name, age, gender):
+        self.name = name
+        self.age = age
+        self.gender=gender
         return f"Course('{self.id}', {self.name}', {self.age})"
 
     
@@ -132,6 +130,7 @@ class Program(db.Model):
     product_schema = ProductSchema()
     products_schema = ProductSchema(many =True)
 
+
 #routes 
 #GET method is working
 @app.route('/',methods=['GET','POST'])
@@ -147,21 +146,25 @@ def index():
         db.session.commit()
         print(persons)
     flash('welcome jon!' "success")
-   
+    return render_template("index.html",persons=persons)
+
+'''
     class ProductSchema(ma.Schema):
         class Meta:
             
             fields = ("name", "age", "gender")
     products_schema = ProductSchema(many =True)
     return products_schema.jsonify(persons)
+'''
 
 #post method is not working.
-'''
 @app.route('/product',methods=['POST'])
 def products():
-    name=request.get_json(['name'])
-    age=request.get_json(['age'])
-    gender=request.get_json(['gender'])
+    persons=request.get_json()
+    name=persons['name']
+    age=persons['age']
+    gender=persons['gender']
+    
     
     newentry = Person(name,age,gender)
     db.session_add(newentry)
@@ -169,11 +172,10 @@ def products():
     
     class ProductSchema(ma.Schema):
         class Meta:
-            
             fields = ("name", "age", "gender")
     product_schema = ProductSchema()
     return product_schema.jsonify(newentry)
-'''
+
 
 
 @app.route("/update/<int:id>", methods=['POST','GET'])
@@ -213,21 +215,17 @@ def home():
 
 
 #login routes for admin
-
 #login
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         session.pop('user_id', None)
-
         username = request.form['username']
         password = request.form['password']
-        
         user = [x for x in users if x.username == username][0]
         if user and user.password == password:
             session['user_id'] = user.id
             return redirect(url_for('index'))
-        
         return redirect(url_for('login'))
     return render_template('login.html')
 
@@ -235,12 +233,11 @@ def login():
 def profile():
     if not g.user:
         return redirect(url_for('login'))
-
     return render_template('profile.html' )
 
 
 if __name__ == '__main__':
     #DEBUG is SET to TRUE. CHANGE FOR PROD
-    app.run(host='0.0.0.0', port=8000,debug=True)
+    app.run(host='0.0.0.0', port=5000,debug=True)
     
     
