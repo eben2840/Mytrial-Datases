@@ -133,6 +133,7 @@ class Program(db.Model):
     products_schema = ProductSchema(many =True)
 
 #routes 
+#GET method is working
 @app.route('/',methods=['GET','POST'])
 def index():
     persons=Person.query.all() 
@@ -154,7 +155,8 @@ def index():
     products_schema = ProductSchema(many =True)
     return products_schema.jsonify(persons)
 
-#post method in API
+#post method is not working.
+'''
 @app.route('/product',methods=['POST'])
 def products():
     name=request.get_json(['name'])
@@ -171,7 +173,7 @@ def products():
             fields = ("name", "age", "gender")
     product_schema = ProductSchema()
     return product_schema.jsonify(newentry)
-
+'''
 
 
 @app.route("/update/<int:id>", methods=['POST','GET'])
