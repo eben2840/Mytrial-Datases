@@ -7,11 +7,13 @@ from flask_marshmallow import Marshmallow
 from flask import(
 Flask,g,redirect,render_template,request,session,url_for,flash,jsonify
 )
+from flask_cors import CORS
 
 
 
 
 app=Flask(__name__)
+CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 app.config['SECRET_KEY'] =" thisismysecretkey"
 
@@ -68,13 +70,9 @@ class Person(db.Model):
     status_doa= db.Column(db.String(),nullable = True)
     extra_curriculum_activities= db.Column(db.String(),nullable = True)
     
-    def __repr__(self, name, age, gender):
-        self.name = name
-        self.age = age
-        self.gender=gender
-        return f"Course('{self.id}', {self.name}', {self.age})"
+    def __repr__(self):
+        return f"Person('{self.id}', {self.name}', {self.age})"
 
-    
 
 
 #yeargroup table
@@ -117,10 +115,7 @@ class Program(db.Model):
     
     def __repr__(self):
         return f"Course('{self.id}', {self.name}',)"
-    
-    
-    
-    
+   
     
     
 #postman  
@@ -141,22 +136,31 @@ def index():
         print(request.json['name'])
         print(request.json['age'])
         print(request.json['gender'])
-        newentry=Person(name=request.form['name'], age=request.form['age'], gender=request.form['gender'])
+        newentry=Person(name=request.json['name'], age=request.json['age'], gender=request.json['gender'])
         db.session.add(newentry)
         db.session.commit()
-        print(persons)
-    flash('welcome jon!' "success")
-    return render_template("index.html",persons=persons)
-
-'''
+       
+        print("successful")
+        class ProductSchema(ma.Schema):
+            class Meta:
+                fields = ("id","name", "age", "gender")
+        product_schema = ProductSchema()
+        print(products_schema)
+        
+    
+   # print(product_schema)
+    flash('welcome jon!', "success")
+    print('flash')
     class ProductSchema(ma.Schema):
-        class Meta:
-            
+        class Meta:  
             fields = ("name", "age", "gender")
     products_schema = ProductSchema(many =True)
+    print(products_schema.jsonify(persons))
+    print(type(products_schema.jsonify(persons)))
+    
     return products_schema.jsonify(persons)
-'''
 
+''''
 #post method is not working.
 @app.route('/product',methods=['POST'])
 def products():
@@ -166,16 +170,18 @@ def products():
     gender=persons['gender']
     
     
-    newentry = Person(name,age,gender)
-    db.session_add(newentry)
-    db.session_commit()
+    newentry = Person(name=name,age=age,gender=gender)
+    db.session.add(newentry)
+    db.session.commit()
     
     class ProductSchema(ma.Schema):
         class Meta:
-            fields = ("name", "age", "gender")
+            fields = ("id","name", "age", "gender")
     product_schema = ProductSchema()
+    print(product_schema)
+    
     return product_schema.jsonify(newentry)
-
+'''
 
 
 @app.route("/update/<int:id>", methods=['POST','GET'])
