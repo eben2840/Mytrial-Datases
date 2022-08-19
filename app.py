@@ -1,3 +1,4 @@
+from crypt import methods
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, redirect, render_template, url_for,request,jsonify
 import os
@@ -69,7 +70,7 @@ class Person(db.Model):
     guardian= db.Column(db.String(),nullable = True)
     status_doa= db.Column(db.String(),nullable = True)
     extra_curriculum_activities= db.Column(db.String(),nullable = True)
-    
+  
     def __repr__(self):
         return f"Person('{self.id}', {self.name}', {self.age})"
 
@@ -121,13 +122,13 @@ class Program(db.Model):
 #postman  
     class ProductSchema(ma.Schema):
         class Meta:
-            fields = ("name", "age", "gender", "id")
+            fields = ("id","name", "age", "gender")
     product_schema = ProductSchema()
     products_schema = ProductSchema(many =True)
 
 
 #routes 
-#GET method is working
+#GET and POST method is working
 @app.route('/',methods=['GET','POST'])
 def index():
     persons=Person.query.all() 
@@ -139,25 +140,14 @@ def index():
         newentry=Person(name=request.json['name'], age=request.json['age'], gender=request.json['gender'])
         db.session.add(newentry)
         db.session.commit()
-       
         print("successful")
-        class ProductSchema(ma.Schema):
-            class Meta:
-                fields = ("id","name", "age", "gender")
-        product_schema = ProductSchema()
-        print(products_schema)
-        
-    
    # print(product_schema)
-    flash('welcome jon!', "success")
-    print('flash')
     class ProductSchema(ma.Schema):
         class Meta:  
-            fields = ("name", "age", "gender")
+            fields = ("id","name", "age", "gender")
     products_schema = ProductSchema(many =True)
     print(products_schema.jsonify(persons))
     print(type(products_schema.jsonify(persons)))
-    
     return products_schema.jsonify(persons)
 
 ''''
@@ -183,9 +173,26 @@ def products():
     return product_schema.jsonify(newentry)
 '''
 
-
-@app.route("/update/<int:id>", methods=['POST','GET'])
+#upgrade method 
+@app.route("//<int:id>", methods=['PUT'])
 def update(id):
+    alumina = Person.query.get(id)
+    name=request.json['name']
+    age=request.json['age']
+    gender=request.json['gender']
+    
+    alumina.name=name
+    alumina.age=age
+    alumina.gender=gender
+    
+    db.session.commit()
+    class ProductSchema(ma.Schema):
+        class Meta:  
+            fields = ("id","name", "age", "gender")
+    product_schema = ProductSchema()
+    return product_schema.jsonify(alumina)
+    
+    """
     user=Person.query.get_or_404(id)
     if request.method== 'POST':
         print(user.name)
@@ -197,19 +204,30 @@ def update(id):
             return"errrrror"
     else:
         return render_template('home.html', user=user)
-
-
-@app.route("/delete/<int:id>")
+    """
+    
+    
+#delete method
+@app.route("//<int:id>",methods=['DELETE'])
 def delete(id):
-    delete=Person.query.get_or_404(id)
+    alumina =Person.query.get(id)
+    db.session.delete(alumina)
+    db.session.commit()
+    class ProductSchema(ma.Schema):
+        class Meta:  
+            fields = ("id","name", "age", "gender")
+    product_schema = ProductSchema()
+    return product_schema.jsonify(alumina)
 
+    """sumary_line
+    delete=Person.query.get_or_404(id)
     try:
             db.session.delete(delete)
             db.session.commit()
             return redirect('/') 
     except:
         return "errrrrorrr"
-
+    """
 
 @app.route('/home',methods=['GET','POST'])
 def home():
@@ -244,6 +262,6 @@ def profile():
 
 if __name__ == '__main__':
     #DEBUG is SET to TRUE. CHANGE FOR PROD
-    app.run(host='0.0.0.0', port=5000,debug=True)
+    app.run(host='0.0.0.0', port=8080,debug=True)
     
     
