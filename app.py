@@ -139,16 +139,23 @@ def index():
         newentry=Person(name=request.json['name'], age=request.json['age'], gender=request.json['gender'])
         db.session.add(newentry)
         db.session.commit()
-        print("successful")
-   # print(product_schema)
-    class ProductSchema(ma.Schema):
-        class Meta:  
-            fields = ("id","name", "age", "gender")
-    products_schema = ProductSchema(many =True)
-    print(products_schema.jsonify(persons))
-    print(type(products_schema.jsonify(persons)))
-    return products_schema.jsonify(persons)
+        return redirect(url_for('base'))
+    return render_template('base.html')
 
+
+@app.route('/test')
+def test():
+    return render_template('test.html')
+
+@app.route('/base')
+def base():
+    return render_template('base.html')
+
+
+
+
+   # print(product_schema)
+ 
 ''''
 #post method is not working.
 @app.route('/product',methods=['POST'])
@@ -175,23 +182,6 @@ def products():
 #upgrade method 
 @app.route("//<int:id>", methods=['PUT'])
 def update(id):
-    alumina = Person.query.get(id)
-    name=request.json['name']
-    age=request.json['age']
-    gender=request.json['gender']
-    
-    alumina.name=name   
-    alumina.age=age
-    alumina.gender=gender
-    
-    db.session.commit()
-    class ProductSchema(ma.Schema):
-        class Meta:  
-            fields = ("id","name", "age", "gender")
-    product_schema = ProductSchema()
-    return product_schema.jsonify(alumina)
-    
-    """
     user=Person.query.get_or_404(id)
     if request.method== 'POST':
         print(user.name)
@@ -203,22 +193,12 @@ def update(id):
             return"errrrror"
     else:
         return render_template('home.html', user=user)
-    """
+    
     
     
 #delete method
 @app.route("//<int:id>",methods=['DELETE'])
 def delete(id):
-    alumina =Person.query.get(id)
-    db.session.delete(alumina)
-    db.session.commit()
-    class ProductSchema(ma.Schema):
-        class Meta:  
-            fields = ("id","name", "age", "gender")
-    product_schema = ProductSchema()
-    return product_schema.jsonify(alumina)
-
-    """sumary_line
     delete=Person.query.get_or_404(id)
     try:
             db.session.delete(delete)
@@ -226,7 +206,7 @@ def delete(id):
             return redirect('/') 
     except: 
         return "errrrrorrr"
-    """
+    
 
 @app.route('/home',methods=['GET','POST'])
 def home():
