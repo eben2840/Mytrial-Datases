@@ -116,9 +116,9 @@ class Program(db.Model):
     
     def __repr__(self):
         return f"Course('{self.id}', {self.name}',)"
-   
-    
-    
+
+
+
 #postman  
     class ProductSchema(ma.Schema):
         class Meta:
@@ -133,7 +133,6 @@ class Program(db.Model):
 def index():
     persons=Person.query.all() 
     if request.method=='POST':
-        print("THis is a post request")
         print(request.json['name'])
         print(request.json['age'])
         print(request.json['gender'])
@@ -181,7 +180,7 @@ def update(id):
     age=request.json['age']
     gender=request.json['gender']
     
-    alumina.name=name
+    alumina.name=name   
     alumina.age=age
     alumina.gender=gender
     
@@ -225,7 +224,7 @@ def delete(id):
             db.session.delete(delete)
             db.session.commit()
             return redirect('/') 
-    except:
+    except: 
         return "errrrrorrr"
     """
 

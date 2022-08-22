@@ -45,8 +45,10 @@
 
     
 {%for newentry in persons%}
-<h4>{{newentry.name}} {{newentry.age}} {{newentry.gender}}<a href="/update/{{newentry.id}}" class="btn btn-outline-secondary btn-sm">update</a>
-   <a href="/delete/{{newentry.id}}" class="btn btn-outline-danger btn-sm">delete</a></h4>
+<h4>{{newentry.name}} {{newentry.age}} {{newentry.gender}}
+  <a href="/update/{{newentry.id}}" class="btn btn-outline-secondary btn-sm">update</a>
+  <a href="/delete/{{newentry.id}}" class="btn btn-outline-danger btn-sm">delete</a>
+</h4>
 {%endfor%}
 </div>
 
