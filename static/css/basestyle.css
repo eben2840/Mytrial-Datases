@@ -359,7 +359,7 @@ aside {
 }
 
 .input-group{
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     position: relative;
 }
 input, textarea{
@@ -507,7 +507,13 @@ textarea:valid~label{
 
 
 
-
+/* ---- Report ----*/
+.chart{
+	margin: 50px 20px 50px 20px;
+	width: 1000px;
+	height: 500px;
+    
+}
 
 
 

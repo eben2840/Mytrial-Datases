@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<span id="result"></span>
+<script>
+    document.getElementById("result").innerHTML=localStorage.getItem("textvalue");
+</script>
+
+
+{% endblock body %}

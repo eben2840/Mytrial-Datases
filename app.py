@@ -153,6 +153,23 @@ def test():
 def base():
     return render_template('base.html')
 
+@app.route('/report')
+def report():
+    return render_template('report.html')
+
+@app.route('/newforms')
+def newforms():
+    form=RegistrationForm()
+    if form.validate_on_submit():
+        print(form.lastname.data)
+    
+    return render_template("newforms.html", form=form)
+    
+
+@app.route('/members')
+def members():
+    return render_template('members.html')
+
 @app.route('/form')
 def form():
     form=RegistrationForm()
@@ -175,6 +192,7 @@ def form():
         print(form.Health.data)
         print(form.Extra.data)
         new=Person(lastname=form.lastname.data, Othername=form.Othername.data)
+        
         db.session.add(new)
         db.session.commit()
         return redirect(url_for("form"))
