@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% block body %}
+     
+        
+        <div class="middle">
+            <div class="middle-text">
+                <h1 style="margin: 5px 0 6px 5px;">Create New Alumni. </h1>
+                <h5 style="color: #992621; margin-left: 5px; "> Personal Details</h5>
+            </div>
+            
+            <form action="" class="from-groups">
+                {{form.hidden_tag()}}
+                 
+                <div class="row">
+        
+                    <div class="input-group">
+                        {{form.lastname(class="input-group", placeholder="Lastname")}}
+                     <label for="name"></label>
+                    </div>   
+                      
+                       <div class="input-group">
+                        {{form.Othername(class="input-group", placeholder="Othername")}}
+                        <label for="name"></label>
+                      </div>
+                       
+                </div>
+        
+                    <div class="row1">
+                            <div class="input-group">
+                                {{form.Gender(class="input-group", placeholder="Gender")}}
+                                     <label for="gender"></label>
+                            </div>
+                            <div class="input-group">
+                                        <input type="date" placeholder="Birth Date" required name="BirthDate">
+                                        <label for="name"></label>   
+                            </div>
+                            <div class="input-group">
+        
+                                {{form.Primary(class="input-group", placeholder="Primary Contact")}}
+                                <label for="name"></label>
+                            </div>
+                            <div class="input-group">
+                                {{form.Other(class="input-group", placeholder="Other Contact")}}
+                                <label for="name"></label>
+                    </div>
+                    </div>
+                                    
+               <div class="row3">
+                       <div class="input-group">
+                        {{form.Kin(class="input-group", placeholder="Next of Kin")}}
+                        <label for="nxtkin"></label>
+                       </div>
+                       <div class="input-group">
+                        {{form.Relationship(class="input-group", placeholder="Relationship With Next Of Kin")}}
+                        <label for="R-nxtkin"></label>
+                         </div> 
+                </div>
+        
+                <div class="row4">
+                     <div class="input-group">
+                        {{form.Home(class="input-group", placeholder="Home Address")}}
+                        <label for="name"></label>
+                     </div>   
+                     <div class="input-group">
+                        {{form.Current(class="input-group", placeholder="Current Place Of Work")}}
+                        <label for="place of work"></label>
+                     </div>  
+                     <div class="input-group">
+                        {{form.Nationality(class="input-group", placeholder="Nationality")}}
+                        <label for="name"></label>
+                     </div>  
+                </div>
+        
+                <div class="row5"> 
+                     <div class="input-group">
+                        {{form.Guardian(class="input-group", placeholder="Guardian")}}
+                        <label for="name"></label>
+                     </div>
+        
+                     <div class="input-group">
+                        <label for="name"></label> 
+                        <select id="">
+                            
+                          <option value="" disabled selected >Status</option>
+                          <option value="dead">Dead</option>
+                          <option value="alive">Alive</option>  
+                        </select>
+                      </div>
+                      
+                     <div class="input-group">
+                        {{form.School(class="input-group", placeholder="Previous School")}}
+       
+                               <label for="name"></label>
+               
+                     </div>   
+                     <div class="input-group">
+                        {{form.Year(class="input-group", placeholder="Year Joined")}}
+                        <label for="name"></label>
+                     </div>
+                </div>
+                <div class="row6">
+                    <div class="input-group">
+                        {{form.Marital(class="input-group", placeholder="Marital Status")}}
+                        <label for="name"></label>
+                    </div>  
+                    <div class="input-group">
+                        {{form.Health(class="input-group", placeholder="Health Status")}}
+                        <label for="name"></label>
+                    </div> 
+                </div>  
+                <div class="row7">
+                    <div class="input-group">
+                        {{form.Extra(class="input-group", placeholder="Extra Curicullum Activities")}}
+                        <label for="name"></label>
+                    </div>
+                    
+
+                </div> 
+                <input type="file" placeholder="Picture">
+    
+                    <button  type="submit">
+                        <span class="btnText">Submit</span>
+                        <i class='bx bxs-chevrons-right icon'></i>
+                   </button>
+                 
+                
+                
+               </div>
+               
+
+               <!--second form-->
+               
+        
+            </form>
+        
+        </div>
+
+
+
+
+     
+{% endblock body %}

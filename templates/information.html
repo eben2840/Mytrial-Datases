@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block body %}
+
+{%for name in name%}
+<h4>{{name.lastname}} {{name.othername}} {{name.gender}}
+</h4>
+{% endfor %}
+
+
+     
+{% endblock body %}
